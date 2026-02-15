@@ -147,6 +147,19 @@ app.get('/api/feedback', (req, res) => {
     });
 });
 
+// Feedback: Remove
+app.delete('/api/feedback/:id', (req, res) => {
+    const { id } = req.params;
+    console.log(`DELETE /api/feedback called for id: ${id}`);
+    db.run("DELETE FROM feedback WHERE id = ?", [id], (err) => {
+        if (err) {
+            console.error("FEEDBACK DELETE ERROR:", err.message);
+            return res.status(500).json({ success: false, message: err.message });
+        }
+        res.json({ success: true });
+    });
+});
+
 // Goals: Get All
 app.get('/api/user-goals', (req, res) => {
     console.log("GET /api/user-goals called");
